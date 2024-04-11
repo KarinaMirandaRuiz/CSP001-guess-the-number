@@ -9,9 +9,12 @@ namespace GuessTheNumber
         public static void Main(/*String params*/)
         {
             Console.WriteLine("Hola! ¿Cómo quieres que te llame?");
-            var namePlayer = Console.ReadLine();
-            namePlayer = Regex.Replace(namePlayer, @"\s+", " ");
-            while (namePlayer.Length == 0 || namePlayer == " ")
+            string? namePlayer = Console.ReadLine();
+            if (!String.IsNullOrEmpty(namePlayer))
+            {
+                namePlayer = Regex.Replace(namePlayer, @"\s+", " ");
+            }
+            while (String.IsNullOrEmpty(namePlayer) || namePlayer.Length == 0 || namePlayer == " ")
             {
                 Console.WriteLine("No ingresó un nombre válido, intente de nuevo");
                 namePlayer = Console.ReadLine();

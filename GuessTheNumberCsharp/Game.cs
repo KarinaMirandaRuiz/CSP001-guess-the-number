@@ -3,14 +3,36 @@ public class Game
 {
     //Atributos
     private Random random = new Random();
-    public int secretNumber;
+    private int secretNumber;
     private Player player;
     // Métodos
     public Game(string name)
     {
-        //secretNumber = random.Next (0,100 + 1);
+        //secretNumber = RandomNumberGenerator(0,100);
         secretNumber = 10;
         this.player = new Player(name);
+    }
+    private int RandomNumberGenerator(int min, int max)
+    {
+        return random.Next (min,max + 1);
+    }
+
+    private bool CheckGuess(int guess, int secretNumber)
+    {
+        if (secretNumber < guess)
+        {
+            Console.WriteLine("Tu número es mayor");
+            Console.WriteLine("-----------------------");
+            return false;
+        }
+        else if (secretNumber > guess)
+        {
+            Console.WriteLine("Tu número es menor");
+            Console.WriteLine("-----------------------");
+            return false;
+        }
+        
+        return true;
     }
 
     public void GamePlayer()
@@ -18,22 +40,11 @@ public class Game
         int guess = player.MakeGuess();
         do
         {
-        if (secretNumber < guess)
-            {
-                Console.WriteLine("Tu número es mayor");
-                Console.WriteLine("-----------------------");
-                guess = player.MakeGuess();
-            }
-            else if (secretNumber > guess)
-            {
-                Console.WriteLine("Tu número es menor");
-                Console.WriteLine("-----------------------");
-                guess = player.MakeGuess();
-            }
+            guess = player.MakeGuess();
         }
-        while (secretNumber != guess);
+        while (!CheckGuess(guess, secretNumber));
         
-        if(player.lastGuess == secretNumber)
+        if(CheckGuess(player.GetLastGuess(), secretNumber))
             {
                 Console.WriteLine($"Acertaste {player.name}!!, el número secreto es {secretNumber}");
             } 

@@ -2,7 +2,7 @@ public class Player
 {
     //Atributos
     public string name;
-    public int lastGuess;
+    private int lastGuess;
     private List<int> Guesses = new List<int>{};
 
     // Métodos
@@ -18,6 +18,11 @@ public class Player
         lastGuess = guess;
     }
 
+    public int GetLastGuess()
+    {
+        return lastGuess;
+    }
+
     public int GetTries(){
         return Guesses.Count;
     }
@@ -28,9 +33,9 @@ public class Player
         double numericGuess;
         int intGuess;
         Console.WriteLine("Inserte un número entero:");
-        var guess = Console.ReadLine();
+        string? guess = Console.ReadLine();
         while(
-            !double.TryParse(guess, out numericGuess) 
+            !int.TryParse(guess, out intGuess) 
             || int.TryParse(guess, out intGuess) != double.TryParse(guess, out numericGuess)
             )  // mientras no pueda convertirlo a double o no sea entero, seguirá haciendo peticiones
         {
@@ -43,8 +48,9 @@ public class Player
                 Console.WriteLine("No se ha insertado un número válido, intente de nuevo");
             }
             guess = Console.ReadLine();
-            intGuess = Convert.ToInt32(guess);
         }
+
+        intGuess = Convert.ToInt32(guess);
 
         PushGuess(intGuess);
         
