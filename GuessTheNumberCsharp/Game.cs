@@ -1,39 +1,44 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
-Random random = new Random();
-
-//int secretNumber = random.Next (0,100 + 1);
-int secretNumber = 10;
-
-Console.WriteLine("Inserte un número:");
-
-var guess = Console.ReadLine();
-
-double numericGuess = Convert.ToDouble(guess);
-
-do
+public class Game
 {
-if (secretNumber < numericGuess)
+    //Atributos
+    private Random random = new Random();
+    public int secretNumber;
+    private Player player;
+    // Métodos
+    public Game(string name)
     {
-        Console.WriteLine("Tu número es mayor");
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("Inserte otro número:");
-        guess = Console.ReadLine();
-        numericGuess = Convert.ToDouble(guess);
+        //secretNumber = random.Next (0,100 + 1);
+        secretNumber = 10;
+        this.player = new Player(name);
     }
-    else if (secretNumber > numericGuess)
+
+    public void GamePlayer()
     {
-        Console.WriteLine("Tu número es menor");
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("Inserte otro número:");
-        guess = Console.ReadLine();
-        numericGuess = Convert.ToDouble(guess);    
+        int guess = player.MakeGuess();
+        do
+        {
+        if (secretNumber < guess)
+            {
+                Console.WriteLine("Tu número es mayor");
+                Console.WriteLine("-----------------------");
+                guess = player.MakeGuess();
+            }
+            else if (secretNumber > guess)
+            {
+                Console.WriteLine("Tu número es menor");
+                Console.WriteLine("-----------------------");
+                guess = player.MakeGuess();
+            }
+        }
+        while (secretNumber != guess);
+        
+        if(player.lastGuess == secretNumber)
+            {
+                Console.WriteLine($"Acertaste {player.name}!!, el número secreto es {secretNumber}");
+            } 
     }
 }
-while (secretNumber != numericGuess);
 
-if(secretNumber == numericGuess)
-{
-    Console.WriteLine($"Acertaste!!, el número secreto es {secretNumber}");
-} 
+
 
